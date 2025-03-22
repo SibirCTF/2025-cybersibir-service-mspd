@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    @import url("/../static/css/suspages.css");
+</style>
+<title>{{.Sus.SusName}}</title>
+<link rel="icon" type="image/ico" href="/static/favicon.ico">
+</head>
+<body>
+    <header>
+    </header>
+    <div id="infopanel">
+        <div class="left-side">
+            <img src="/static/MSPDlogosmall.png" alt="Логотип" class="logo">
+            <span>MSPD //</span>
+            <button class="infopanel-btn" style="background-color: #8dd1ee;" onclick="location.href='/sus_browser'">Подозреваемые</button>
+            <span>//</span>
+            <button class="infopanel-btn" onclick="location.href='/sus_uploader'">Заявить о подозреваемом</button>
+            <span>//</span>
+            <button class="infopanel-btn" onclick="location.href='/claim_manager'">Входящие заявки</button>
+            <span>//</span>
+            <button class="infopanel-btn" onclick="location.href='/claim_browser'">Исходящие заявки</button>
+        </div>
+        <div class="center-side">
+            <div id="notification" style="display: none;"></div>
+        </div>
+        <div class="right-side">
+            <span>Вы вошли в сеть как {{.Username}} //</span>
+            <button class="infopanel-btn" onclick="logout()" style="background-color: #8dd1ee; margin-left: 5px;">Выйти</button>
+        </div>
+    </div>
+
+    <section id="boxes">
+        <div class="sus-tile-big">
+            <div class="sus-header">
+                <img class="susImage" src="/static/sus/{{.Sus.ID}}.png" onclick="location.href='/sus_browser'" onerror="this.onerror=null; this.src='/static/unknownsus.png'" width="150" height="150" />
+                <div class="sus-info">
+                    <h2 id="SusID" style="color: #ea37df; margin: 15px; font-size: 1.6rem;">Подозреваемый №{{.Sus.ID}}</h2>
+                    <h2 id="SusName" style="color: #ea37df; margin: 15px; font-size: 1.6rem;">{{.Sus.SusName}}</h2>
+                </div>
+            </div>
+            <p id="SusDesc" style="color: #8dd1ee; margin: 5px; font-size: 1.1rem;">Описание подозреваемого: {{.Sus.SusDesc}}</p>
+            <p id="CrimeDesc" style="color: #8dd1ee; margin: 5px; font-size: 1.1rem;">Описание преступления: {{.Sus.CrimeDesc}}</p>
+            <span id="AuthorUsername" style="color: #8dd1ee; margin: 5px; margin-right: 0px; font-size: 1.1rem;">Информация поступила от {{.Author.Username}}</span>
+            {{if ne .Sus.AuthorID $.ID}}
+            <span id="AuthorID" style="color: #8dd1ee; font-size: 1.1rem;">(ID{{.Sus.AuthorID}})</span>
+            {{else}}
+            <span style="color: #8dd1ee; font-size: 1.1rem;">(это вы)</span>
+            {{end}}
+            {{if ne .Sus.AuthorID $.ID}}
+            <div class="form-control">
+                <form style="margin-top: 20px; margin-bottom: 10px;" action="/create_claim" method="POST">
+                    <input type="hidden" name="ID" value="{{.Sus.ID}}" />
+                    <button class="sus_btn" type="submit">Заявить о поимке</button>
+                </form>
+            </div>
+            <div class="form-control">
+                <form style="margin-top: 20px; margin-bottom: 10px;" action="/download_profile" method="POST">
+                    <input type="hidden" name="ID" value="{{.Sus.ID}}" />
+                    <input type="hidden" name="ext" value=".png" />
+                    <button class="sus_btn" type="submit">Скачать досье</button>
+                </form>
+            </div>
+            {{else}}
+            <p id="Sbertoken" style="color: #c36ada; margin: 5px; font-size: 1.1rem; margin-top: 10px;">Sbertoken: {{.Sus.Sbertoken}}</p>
+            {{end}}
+        </div>
+    </section>
+    <script src="static/js/sus_notification.js"></script>
+</body>
+</html>
+<script>
+    function logout() {
+        var form = document.createElement("form");
+        form.method = "POST";
+        form.action = "/logout";
+        document.body.appendChild(form);
+        form.submit();
+    }
+</script>

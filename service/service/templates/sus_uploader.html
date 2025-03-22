@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    @import url("/static/css/suspages.css");
+</style>
+<title>Заявить о преступлении — MSPD</title>
+<link rel="icon" type="image/ico" href="/static/favicon.ico">
+</head>
+<body>
+    <header>
+    </header>
+    <div id="infopanel">
+        <div class="left-side">
+            <img src="/static/MSPDlogosmall.png" alt="Логотип" class="logo">
+            <span>MSPD //</span>
+            <button class="infopanel-btn" onclick="location.href='/sus_browser'">Подозреваемые</button>
+            <span>//</span>
+            <button class="infopanel-btn" style="background-color: #8dd1ee;" onclick="location.href='/sus_uploader'">Заявить о подозреваемом</button>
+            <span>//</span>
+            <button class="infopanel-btn" onclick="location.href='/claim_manager'">Входящие заявки</button>
+            <span>//</span>
+            <button class="infopanel-btn" onclick="location.href='/claim_browser'">Исходящие заявки</button>
+        </div>
+        <div class="center-side">
+            <div id="notification" style="display: none;"></div>
+        </div>
+        <div class="right-side">
+            <span>Вы вошли в сеть как {{.Username}} //</span>
+            <button class="infopanel-btn" onclick="logout()" style="background-color: #8dd1ee; margin-left: 5px;">Выйти</button>
+        </div>
+    </div>
+    <section id="boxes">
+        <div class="sus-tile-big">
+            <img src="/static/MSPDupload.png" width="100%"/>
+            <form id="sus-form" action="/create_sus" method="POST" enctype="multipart/form-data">
+                <div class="form-control">
+                    <label style="color: #8dd1ee; margin: 5px; font-size: 1.1rem;" for="sus_name">
+                        <span data-tooltip="Введите имя подозреваемого">[?]</span>
+                        Имя подозреваемого:</label>
+                    <input type="text" id="sus_name" maxlength="100" name="sus_name" required>
+                </div>
+                <div class="form-control">
+                    <label style="color: #8dd1ee; margin: 5px; font-size: 1.1rem;" for="sus_desc">
+                        <span data-tooltip="Краткое описание подозреваемого. Полные данные будут загружены автоматически">[?]</span>
+                        Описание подозреваемого:</label>
+                    <input type="text" id="sus_desc" maxlength="256" name="sus_desc" required>
+                </div>
+                <div class="form-control">
+                    <label style="color: #8dd1ee; margin: 5px; font-size: 1.1rem;" for="crime_desc">
+                        <span data-tooltip="Краткое описание преступления">[?]</span>
+                        Описание преступления:</label>
+                    <input type="text" id="crime_desc" maxlength="256" name="crime_desc" required>
+                </div>
+                <div class="form-control">
+                    <label style="color: #8dd1ee; margin: 5px; font-size: 1.1rem;" for="sbertoken">
+                        <span data-tooltip="Введите адрес транзакции Sbertoken для выдачи награды. Награда будет распределена между всеми участниками задержания">[?]</span>
+                        Sbertoken:</label>
+                    <input type="text" id="sbertoken" maxlength="256" name="sbertoken" required>
+                </div>
+                <div class="form-control">
+                    <label style="color: #8dd1ee; margin: 5px; font-size: 1.1rem;" for="sus_img">
+                        <span data-tooltip="Поддерживаемый формат - .png">[?]</span>
+                        Фото преступника:</label>
+                    <input type="file" id="sus_img" accept="image/png" name="sus_img" multiple>
+                </div>
+                <div class="form-control">
+                    <input type="submit" class="sus_btn" value="Загрузить">
+                </div>
+            </form>
+        </div>
+    </section>
+</body>
+</html>
+<script>
+    function logout() {
+        var form = document.createElement("form");
+        form.method = "POST";
+        form.action = "/logout";
+        document.body.appendChild(form);
+        form.submit();
+    }
+</script>
+

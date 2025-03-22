@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url("static/css/authpages.css");
+    </style>
+    <title>Register — MSPD</title>
+    <link rel="icon" type="image/ico" href="/static/favicon.ico">
+</head>
+<body>
+    <header>
+        <div class="container" onclick="location.href='/'">
+            <img src="/static/MSPDregister.png" width="100%"/>
+        </div>
+    </header>
+    <div id="notification" style="display: none;"></div>
+    <div class="container">
+        <div class="container-box" style="padding-bottom: 0px">
+            <form id="login-form" action="/register" method="POST">
+                <div class="form-control">
+                    <label for="username" style="font-size: 18px; padding-bottom: 5px;">Логин</label>
+                    <input type="text" id="username" maxlength="100" name="username" required>
+                </div>
+                <div class="form-control" style="padding-bottom: 5px;">
+                    <label for="password" style="font-size: 18px; padding-bottom: 5px;">Пароль</label>
+                    <input type="password" id="password" maxlength="256" name="password" required>
+                </div>
+                <div class="form-control">
+                    <input type="submit" value="Зарегистрироваться">
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="static/js/notification.js"></script>
+</body>
+</html>
+

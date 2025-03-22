@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "1015:1015"
+    volumes:
+      - ./service/templates:/app/templates
+      - ./service/static:/app/static
+    environment:
+      - GO_ENV=production
+    restart: unless-stopped

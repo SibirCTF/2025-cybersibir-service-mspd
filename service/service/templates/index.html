@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #322639;
+    }
+    section#showcase {
+        min-height: 300px;
+        background: #322639;
+        text-align: center;
+        color: #61dafb;
+    }
+    section#about {
+        margin-top: 30px;
+        text-align: center;
+        color: #c36ada;
+    }
+    section#boxes {
+        margin: 20px 0;
+        text-align: center;
+    }
+    section#boxes .button {
+        width: 30%;
+        color: #fff;
+        display: inline-block;
+        padding: 20px;
+        margin: 5px;
+        vertical-align: top;
+        transition: background 0.5s ease;
+    }
+    section#boxes .box:hover {
+        background: #322639;
+        cursor: pointer;
+    }
+    .button1 {background: linear-gradient(to right, #434eca, #8dd1ee);}
+    .button2 {background: linear-gradient(to left, #df2c2c, #df8484);}
+    .button:hover {
+        background: #322639;
+        cursor: pointer;
+    }
+</style>
+<title>MSPD</title>
+<link rel="icon" type="image/ico" href="/static/favicon.ico">
+</head>
+<body>
+    <header>
+    </header>
+    <section id="showcase">
+        <div class="container">
+            <img src="/static/MSPDlogo.png" />
+        </div>
+    </section>
+    <section id="boxes">
+        <div class="container">
+            <div class="button button1" onclick="location.href='/sign_in'">
+                <h3>Войти</h3>
+            </div>
+            <div class="button button2" onclick="location.href='/sign_up'">
+                <h3>Регистрация</h3>
+            </div>
+        </div>
+    </section>
+    <section id="about">
+        <a>Megasibirsk City Police Department // Russian Empire, Megasibirsk, Tomsk District, D.Medvedev St. 13 // KEVA team NxVP 0x004BCE8 //</a>
+        <a href="/about" style="text-decoration: underline; color: inherit;">Узнать больше о нас</a>
+    </section>
+</body>
+</html>
