@@ -75,13 +75,13 @@ def put_flag():
     creds = {"username":username,"password":password}
     try:
         # пытаемся достучаться до сервиса
-        req = requests.get(url)
+        req = requests.get(url, timeout=2)
     except:
         service_down()
     try:
         s = requests.Session()
-        req = s.post(url+"/register", creds)
-        req = s.post(url+"/authorize", creds)
+        req = s.post(url+"/register", creds, timeout=2)
+        req = s.post(url+"/authorize", creds, timeout=2)
         gender = random.choice(["male","female"])
         with open(f"{gender}_namelist.txt", 'r', encoding='utf-8') as file:
             lines = file.readlines()
@@ -110,7 +110,7 @@ def put_flag():
             files = {
                 'sus_img': img
             }
-            response = s.post(url+"/create_sus", data=data, files=files)
+            response = s.post(url+"/create_sus", data=data, files=files, timeout=2)
             redirect_response = response.history[-1]
             redirect_url = redirect_response.headers['Location']
             susid = int(redirect_url.strip("/sus_browser?err=successful_upload&id="))
@@ -146,14 +146,14 @@ def check_flag():
         checker_is_shit()
     try:
         # пытаемся достучаться до сервиса
-        req = requests.get(url)
+        req = requests.get(url, timeout=2)
     except:
         service_down()
     try:
         # логинимся как владелец и проверяем наличие флага
         s = requests.Session()
-        req = s.post(url+"/authorize", creds)
-        req = s.get(url+"/sus/"+susid)
+        req = s.post(url+"/authorize", creds, timeout=2)
+        req = s.get(url+"/sus/"+susid, timeout=2)
         soup = BeautifulSoup(req.text, 'html.parser')
         flag_to_check = soup.find('p', id='Sbertoken').text.strip("Sbertoken: ")
         if flag != flag_to_check:
@@ -161,16 +161,16 @@ def check_flag():
         # логинимся как левый пользователь и делаем заявку на получение флага
         s2 = requests.Session()
         second_creds = {"username":str(uuid.uuid4()),"password":str(uuid.uuid4())}
-        req = s2.post(url+"/register", second_creds)
-        req = s2.post(url+"/authorize", second_creds)
-        req = s2.post(url+"/create_claim", data={"ID":susid})
+        req = s2.post(url+"/register", second_creds, timeout=2)
+        req = s2.post(url+"/authorize", second_creds, timeout=2)
+        req = s2.post(url+"/create_claim", data={"ID":susid}, timeout=2)
         redirect_response = req.history[-1]
         redirect_url = redirect_response.headers['Location']
         claim_id = redirect_url.strip("/sus_browser?err=successful_accept&id=")
         # принимаем заявку
-        req = s.post(url+"/accept_claim", data={"ID":claim_id})
+        req = s.post(url+"/accept_claim", data={"ID":claim_id}, timeout=2)
         # проверяем получен ли флаг
-        req = s2.get(url+"/claim_browser")
+        req = s2.get(url+"/claim_browser", timeout=2)
         soup = BeautifulSoup(req.text, 'html.parser')
         claims = soup.find_all(class_='sus-tile')
         flags = [claim.find('p', id='Reward').text for claim in claims if claim.find('p', id='Reward')]
