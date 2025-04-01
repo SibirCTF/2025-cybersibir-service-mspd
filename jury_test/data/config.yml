@@ -1,0 +1,37 @@
+## Combined config for ctf01d
+# use 2 spaces for tab
+
+game:
+  id: "test" # uniq gameid must be regexp [a-z0-9]+
+  name: "Test" # visible game name in scoreboard
+  start: "2023-11-12 16:00:00" # start time of game (UTC)
+  end: "2030-11-12 22:00:00" # end time of game (UTC)
+  coffee_break_start: "2023-11-12 20:00:00" # start time of game coffee break (UTC), but it will be ignored if period more (or less) then start and end
+  coffee_break_end: "2023-11-12 21:00:00" # end time of game coffee break (UTC), but it will be ignored if period more (or less) then start and end
+  flag_timelive_in_min: 1 # you can change flag time live (in minutes)
+  basic_costs_stolen_flag_in_points: 1 # basic costs stolen (attack) flag in points for adaptive scoreboard
+  cost_defence_flag_in_points: 1.0 # cost defences flag in points
+
+scoreboard:
+  port: 8080 # http port for scoreboard
+  htmlfolder: "./html" # web page for scoreboard see index-template.html
+  random: no # If yes - will be random values in scoreboard
+
+checkers:
+  - id: "mspd" # work directory will be checker_mspa
+    service_name: "MSPD"
+    enabled: yes
+    script_path: "./checker.py"
+    script_wait_in_sec: 10
+    time_sleep_between_run_scripts_in_sec: 30
+teams:
+  - id: "t01" # must be uniq
+    name: "Team #1"
+    active: yes
+    logo: "./html/images/teams/team01.png"
+    ip_address: "192.168.1.11" # address to vulnserver
+  - id: "t02" # must be uniq
+    name: "Team #2"
+    active: yes
+    logo: "./html/images/teams/team02.png"
+    ip_address: "192.168.1.12" # address to vulnserver
